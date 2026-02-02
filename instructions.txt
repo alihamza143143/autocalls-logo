@@ -1,0 +1,88 @@
+SVG & PNG
+One‑page Handoff
+Autocalls.uk — Dynamic Logo — One‑page Handoff
+
+Objective
+• Data‑driven, dynamic logo showing tenor, observations, barrier and current market position.
+• Animated for web/mobile; nightly static images from data.
+
+Key visuals
+• Outer ring: N segments (1–10), each 36°, with visible white gaps; rotates clockwise at a constant 10‑year rate.
+• Blue ring: rotates in sync; observation ticks reach 12:00 precisely on their dates.
+• Barrier: fixed radial mark (e.g., −30% at 9:00) and rotating barrier‑test mark that reaches 12:00 at maturity.
+• Pointer ‘A’: non‑linear mapping with anchors at ‘clock times’ (+5%≈1:00; +10%%=2:00;+30%=3:00; +50%≈4:00; equal negative: −5%=11:00; 30%=9:00; −50%≈8:00).
+• Next‑hurdle & Final‑hurdle arrows: distinct colours; collision‑avoidance via radial offset then angular jitter.
+
+Inputs (JSON)
+• start_date, current_date, tenor_years (1–10), initial_strike_level, current_level.
+• barrier_percent (−30..−50).
+• observations: [{date, hurdle_percent, triggered}].
+• final_hurdle_percent; centre_state; bottom_arrow_state; counterparty; is_called; called_date.
+
+Outputs
+• Animated SVG (and optional Lottie).
+• Nightly static SVG + PNG (512 / 1024 / 2048 px).
+
+Acceptance criteria
+• Segments precisely 36° with gaps; rotation synced; ticks hit 12:00 on dates.
+• Pointer hits anchor positions; barrier fixed + barrier test at maturity; distinct arrows; called state locks.
+
+Full Designer & Coder Brief (v1.4)
+Autocalls.uk — Dynamic Logo — Designer & Coder Brief v1.4
+
+1) Objective
+• Visualise tenor (1–10y), observation ticks on a rotating blue ring, barrier (fixed + maturity test), market position via pointer ‘A’, and next/final hurdles.
+• Deliver animated asset (SVG + GSAP; optional Lottie) and nightly static renders (SVG/PNG).
+
+2) Visual system
+2.1 Outer rotating ring (years)
+• N segments; each 36°; white gap notch (gap_angle_deg token).
+• Clockwise rotation at constant 10‑year rate; elapsed greying when leading edge crosses 12:00.
+
+2.2 Blue ring (observations) — rotates in sync
+• Uniform ticks; observation ticks reach 12:00 on their dates; on autocall, tick bold/filled.
+
+2.3 Barrier indicators
+• variable barrier: −30%→−90° (9:00), −50%→−120° (~8:00) (as per Poiter A scale below; linear interpolation between anchors.
+• Rotating barrier‑test marker on last day –reaches 12:00 at maturity; avoid overlap with observations via radial offset (±6 px) then angular jitter (±2°).
+
+2.4 Pointer ‘A’ — non‑linear sensitivity
+• Anchors enforced: +5%≈1:00 (~30°), +30%=3:00 (90°), +50%≈4:00 (120°), −30%=9:00 (−90°), −50%≈8:00 (−120°).
+• Bands: 0–5, 5–15, 15–30, 30–50 with decreasing sensitivity; clamp beyond ±50%; easeOutQuad.
+
+2.5 Next‑hurdle & final‑hurdle indicators
+• Next observation’s hurdle arrow (Accessible Green) and final hurdle arrow (Purple) at their mapped angles; barrier is Red.
+• Collision avoidance: radial offset then angular jitter.
+
+2.6 Centre dot, bottom arrow, data area
+• Centre: Green/Amber/Red via future data flag; Bottom arrow may rotate/colour (TBD); Data area shows counterparty + ‘Called’ date.
+
+2.7 Wordmark
+• ‘Autocalls.uk’ beneath emblem; Inter/Segoe/Source Sans; accessible contrast; ‘Precision Investing’ beneath that.
+
+
+3) Geometry & tokens
+• viewBox 0 0 1024 1024; R_outer=420 px; W_ring=64 px; gap_angle_deg=3°.
+• R_blue=330 px; tick stroke=2 px; tick length=14 px; barrier fixed tick=20 px; maturity mark=12 px.
+• Pointer height≈300 px; centre dot R=48 px; bottom arrow width=120 px.
+
+4) Colours
+• Navy #0A255A; Primary Green #007A3A; Accessible Green #0FA15A; Barrier Red #C62828; Final‑hurdle Purple #5E35B1; Grey light #D9D9D9; Grey mid #A6A6A6.
+
+5) Behaviour & logic
+• Rotation: angle_per_day = 360°/(10*365.25); outer + blue rings rotate in sync.
+• Observations: ticks by date; reach 12:00 on dates; on call → tick bold + ‘Called’ label, stop & lock.
+• Pointer: piecewise bands with anchors; clamp ±50%; easing.
+• Barrier: fixed map (−30..−50 → −90..−120); maturity test hits 12:00; no overlap at 12:00.
+• Next/final arrows: mapped via same curve; distinct colours; collision avoidance.
+
+6) Data model (JSON)
+• Fields: plan_name, tenor_years, start_date, current_date, market_close_time_gmt, initial_strike_level, current_level, barrier_percent, observations[{date,hurdle_percent,triggered}], final_hurdle_percent, centre_state, bottom_arrow_state, counterparty, is_called, called_date, brand_colours, design_tokens.
+
+7) Technical delivery
+• Animated SVG + GSAP; optional Lottie (AE+Bodymovin).
+• Nightly renders: Node.js → SVG → PNG (512/1024/2048); latest symlink.
+• Accessibility: alt text; contrast ≥4.5:1; perf target 60 fps, <100 KB.
+
+8) Acceptance criteria
+• Segments 36° with gaps; rings in sync; ticks hit 12:00; pointer hits anchors; barrier fixed + maturity test; distinct arrows; called locks; static assets produced nightly.

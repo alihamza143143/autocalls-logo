@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mariana 10:10 – FTSE - Dynamic Logo showing 12.0% performance">
+  <rect width="1024" height="1024" fill="white"/>
+  
+  <!-- Scale markers -->
+  <text x="512" y="47" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">0%</text><text x="744.5" y="109.29818724023608" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">+5%</text><text x="977" y="512" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">+30%</text><text x="914.7018127597639" y="744.5" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">+50%</text><text x="279.5000000000001" y="109.29818724023602" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">-5%</text><text x="47" y="511.99999999999994" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">-30%</text><text x="109.29818724023608" y="744.5" fill="#A6A6A6" font-size="12" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Segoe UI, sans-serif">-50%</text>
+  
+  <!-- 12:00 marker -->
+  <line x1="512" y1="82" x2="512" y2="62" stroke="#0FA15A" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Outer ring -->
+  <g transform="rotate(33.80698151950719, 512, 512)">
+    <path d="M 521.3189935976028 156.12199230870164 A 356 356 0 0 1 713.6406203452404 218.61107685056243 L 749.8906195084298 165.86700077875338 A 420 420 0 0 0 522.9943182893068 92.14392351026595 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 728.7190687271045 229.56621085632025 A 356 356 0 0 1 847.5803708288156 393.1647581127776 L 907.9094262587149 371.8011191218162 A 420 420 0 0 0 767.6798001836627 178.79159707768122 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 853.3398256130768 410.8905372854035 A 356 356 0 0 1 853.3398256130768 613.1094627145965 L 914.7042886446411 631.2864447756475 A 420 420 0 0 0 914.7042886446411 392.7135552243525 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 847.5803708288156 630.8352418872224 A 356 356 0 0 1 728.7190687271045 794.4337891436797 L 767.6798001836627 845.2084029223188 A 420 420 0 0 0 907.9094262587149 652.1988808781838 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 713.6406203452404 805.3889231494376 A 356 356 0 0 1 521.3189935976028 867.8780076912983 L 522.9943182893068 931.856076489734 A 420 420 0 0 0 749.8906195084298 858.1329992212466 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 502.6810064023972 867.8780076912983 A 356 356 0 0 1 310.35937965475955 805.3889231494377 L 274.1093804915703 858.1329992212466 A 420 420 0 0 0 501.00568171069335 931.856076489734 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 295.2809312728955 794.4337891436797 A 356 356 0 0 1 176.4196291711845 630.8352418872225 L 116.09057374128508 652.1988808781839 A 420 420 0 0 0 256.3201998163373 845.2084029223188 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 170.66017438692325 613.1094627145965 A 356 356 0 0 1 170.66017438692325 410.89053728540364 L 109.29571135535889 392.7135552243526 A 420 420 0 0 0 109.29571135535889 631.2864447756475 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 176.41962917118445 393.1647581127777 A 356 356 0 0 1 295.2809312728954 229.56621085632037 L 256.3201998163372 178.79159707768133 A 420 420 0 0 0 116.09057374128503 371.8011191218164 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/><path d="M 310.35937965475955 218.61107685056243 A 356 356 0 0 1 502.68100640239703 156.12199230870164 L 501.0056817106931 92.14392351026595 A 420 420 0 0 0 274.1093804915702 165.86700077875338 Z" fill="#0A255A" stroke="#0A255A" stroke-width="2" opacity="1"/>
+  </g>
+  
+  <!-- Blue ring -->
+  <g transform="rotate(33.80698151950719, 512, 512)">
+    <circle cx="512" cy="512" r="330" fill="none" stroke="#0A255A" stroke-width="2" opacity="0.3"/>
+    <line x1="500.04372952377685" y1="196.2262715229473" x2="498.984313152466" y2="168.24632089839832" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="316.8268950400794" y1="263.4774475016325" x2="299.533075613251" y2="241.45646183722022" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="208.06090917421687" y1="425.5301840640542" x2="181.1295973288943" y2="417.8683016393501" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="215.42291138580583" y1="621.0780936262108" x2="189.1439288503709" y2="630.7432411627105" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="336.06568534438844" y1="774.4940321734197" x2="320.4765688559165" y2="797.7529970495455" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="523.8204675368785" y1="827.7788411961916" x2="524.8678507363487" y2="855.759244846487" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="707.0662071573356" y1="760.6064657752316" x2="724.3505546269729" y2="782.6348867932902" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="816.0503996127921" y1="598.0776073976352" x2="842.9915742620269" y2="605.7047371670459" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="808.6239713764211" y1="403.04946257645105" x2="834.9071080806609" y2="393.3956174882885" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/><line x1="688.0471867223358" y1="249.58165451487383" x2="703.6463045331757" y2="226.32939605416647" stroke="#0A255A" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Barrier -->
+  <line x1="202" y1="511.99999999999994" x2="162" y2="511.99999999999994" stroke="#C62828" stroke-width="4" stroke-linecap="round"/>
+  <text x="222" y="511.99999999999994" fill="#C62828" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">-30%</text>
+  
+  <!-- Final hurdle -->
+  <circle cx="214.19648621618092" cy="275.96384349424204" r="12" fill="#5E35B1"/>
+  <text x="214.19648621618092" y="275.96384349424204" fill="white" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="middle">F</text>
+  
+  <!-- Pointer -->
+  <line x1="512" y1="512" x2="683.4142839043701" y2="408.9604771286667" stroke="#0A255A" stroke-width="6" stroke-linecap="round"/>
+  <polygon points="683.4142839043701,408.9604771286667 630.0691589655949,389.6902550850624 675.4057635251371,465.1112332560669" fill="#0A255A"/>
+  <text x="709.1264264900256" y="393.5045486979667" fill="#0A255A" font-size="32" font-weight="bold" text-anchor="middle" dominant-baseline="middle">A</text>
+  
+  <!-- Centre dot -->
+  <circle cx="512" cy="512" r="48" fill="#007A3A"/>
+  
+  
+  <!-- Data area -->
+  <text x="512" y="592" fill="#0A255A" font-size="14" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif">Morgan Stanley</text>
+  
+  <text x="512" y="612" fill="#0FA15A" font-size="20" font-weight="bold" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif">+12.0%</text>
+  
+  <!-- Wordmark -->
+  <text x="512" y="992" fill="#0A255A" font-size="36" font-weight="bold" text-anchor="middle" font-family="Inter, Segoe UI, Source Sans Pro, sans-serif">Autocalls.uk</text>
+  <text x="512" y="1022" fill="#A6A6A6" font-size="18" text-anchor="middle" font-family="Inter, Segoe UI, Source Sans Pro, sans-serif">Precision Investing</text>
+</svg>

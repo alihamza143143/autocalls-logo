@@ -1,0 +1,46 @@
+{
+  "plan_name": "Mariana 10:10 – FTSE",
+  "tenor_years": 10,
+  "start_date": "2025-01-02",
+  "current_date": "2026-01-24",
+  "market_close_time_gmt": "16:30",
+  "initial_strike_level": 7400,
+  "current_level": 8290,
+  "barrier_percent": -30,
+  "observations": [
+    {"date": "2026-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2027-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2028-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2029-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2030-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2031-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2032-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2033-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2034-01-02", "hurdle_percent": 100, "triggered": false},
+    {"date": "2035-01-02", "hurdle_percent": 100, "triggered": false}
+  ],
+  "circle_fill": "#FFFFFF",
+  "bottom_arrow_state": null,
+  "bottom_arrow_color": "#107b44",
+  "bottom_arrow_target": 0,
+  "counterparty": "Morgan Stanley",
+  "is_called": false,
+  "called_date": null,
+  "brand_colours": {
+    "navy": "#0A255A",
+    "green_primary": "#007A3A",
+    "green_accent": "#0FA15A",
+    "barrier_red": "#C62828",
+    "final_hurdle_purple": "#5E35B1",
+    "grey_light": "#D9D9D9",
+    "grey_mid": "#A6A6A6"
+  },
+  "design_tokens": {
+    "gap_angle_deg": 3.0,
+    "tick_stroke_width": 2.0,
+    "segment_outline_width": 2.0,
+    "radial_offset_px": 6,
+    "angular_jitter_deg": 2.0,
+    "pointer_ease": "easeOutQuad"
+  }
+}
