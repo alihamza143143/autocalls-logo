@@ -800,51 +800,49 @@ const DynamicLogo = ({ data, animate = true, size = 512, debug = false }) => {
     );
   };
 
-  // Calculate the angle from arrow center to target point on the circle
-  // This accounts for the arrow not being at the center of the circle
-  const calculateDirectionToTarget = (arrowCenterAngle, arrowCenterRadius, targetAngle, targetRadius) => {
-    // Arrow center position
-    const arrowCenter = polarToCart(arrowCenterAngle, arrowCenterRadius);
-    // Target position on circle
-    const target = polarToCart(targetAngle, targetRadius);
-    
-    // Direction vector from arrow center to target
-    const dx = target.x - arrowCenter.x;
-    const dy = target.y - arrowCenter.y;
-    
-    // Angle in standard math coords (0=right, CCW positive)
-    const mathAngle = Math.atan2(dy, dx) * 180 / Math.PI;
-    
-    // Convert to our system (0=12 o'clock, CW positive): add 90
-    return mathAngle + 90;
-  };
+  // ============================================================================
+  // BOTTOM ARROW - WORLD-FIXED IMAGINARY CIRCLE
+  // ============================================================================
+  //
+  // CONCEPT:
+  //   The arrow has an imaginary 360° reference circle centered at its position.
+  //   This circle is ALWAYS UPRIGHT - its 0° is always at the absolute top
+  //   (world 12 o'clock), regardless of where the A pointer is.
+  //
+  // BEHAVIOR:
+  //   - Arrow POSITION: Moves with the A (stays below it)
+  //   - Arrow ROTATION: Fixed in WORLD coordinates (does NOT rotate with A)
+  //   - Imaginary circle: Always upright (0° = world 12 o'clock)
+  //
+  // WORLD COORDINATES:
+  //   0° = absolute top (12 o'clock)
+  //   90° = absolute right (3 o'clock)
+  //   180° = absolute bottom (6 o'clock)
+  //   270° = absolute left (9 o'clock)
+  //
+  // IMPLEMENTATION:
+  //   The arrow is inside a group rotated by pointerAngle (moves with A).
+  //   To make it point at a WORLD angle, we counter-rotate:
+  //
+  //   localRotation = worldTargetAngle - pointerAngle
+  //
+  //   This cancels out the A's rotation, so the arrow points at a fixed
+  //   world direction regardless of where A is pointing.
+  //
+  // ============================================================================
 
   // Render bottom green arrow
-  // - Positioned relative to the A pointer (moves with it around the logo center)
-  // - Rotates on its own axis to always point at bottom_arrow_target (0-360° clockwise on circle)
-  // - 0° = 12 o'clock, 90° = 3 o'clock, 180° = 6 o'clock, 270° = 9 o'clock
   const renderBottomArrow = () => {
     const arrowColor = data.bottom_arrow_color || colors.greenPrimary;
     const scale = 0.28;
     const offsetY = 10;
 
-    // Target angle on the circle (0-360, clockwise from 12 o'clock)
-    const targetAngle = Number(bottom_arrow_target) || 0;
+    // Target angle in WORLD coordinates (0-360, clockwise from absolute 12 o'clock)
+    const worldTargetAngle = Number(bottom_arrow_target) || 0;
     
-    // Arrow center is at 180° from pointerAngle (below the A), at radius ~81
-    const arrowCenterRadius = (1100 - 846) * scale + offsetY; // ≈ 81
-    const arrowCenterAngle = pointerAngle + 180;
-    
-    // Calculate actual direction from arrow center to target on circle
-    const directionToTarget = calculateDirectionToTarget(arrowCenterAngle, arrowCenterRadius, targetAngle, R_BLUE);
-    
-    // Arrow path default pointing direction in local coords (may need adjustment based on path shape)
-    // 0 = path points UP (12 o'clock), adjust if arrow shape points differently
-    const ARROW_PATH_DEFAULT_ANGLE = 0;
-    
-    // After group rotation by pointerAngle, arrow points at (pointerAngle + ARROW_PATH_DEFAULT_ANGLE)
-    // Local rotation needed to point at the calculated direction
-    const localRotation = directionToTarget - pointerAngle - ARROW_PATH_DEFAULT_ANGLE;
+    // Counter-rotate to cancel the A's rotation
+    // This keeps the arrow pointing at a fixed WORLD direction
+    const localRotation = worldTargetAngle - pointerAngle;
 
     // Arrow's local axis in original SVG coordinate space
     const arrowAxisX = 846;
@@ -854,7 +852,7 @@ const DynamicLogo = ({ data, animate = true, size = 512, debug = false }) => {
       <g transform={`rotate(${pointerAngle}, ${CENTER}, ${CENTER})`}>
         {/* Position + scale in original SVG coordinate space */}
         <g transform={`translate(${CENTER - 846 * scale}, ${CENTER - 846 * scale + offsetY}) scale(${scale})`}>
-          {/* Rotate on own axis to point at target angle on circle */}
+          {/* Counter-rotate to point at WORLD target angle */}
           <g transform={`rotate(${localRotation}, ${arrowAxisX}, ${arrowAxisY})`}>
             <path
               d="M930.37,1175.38l-44.8-13.84c-12.5-3.87-25-7.54-37.43-11.72-5.57-1.91-10.63-1.6-16.16.21-24.21,8-48.47,15.74-72.78,23.54-2.38.77-4.86,1.39-9.14,2.58,30.82-46.51,60.55-91.37,91.16-137.62L931.41,1174C931.05,1174.45,930.74,1174.91,930.37,1175.38Z"
@@ -866,65 +864,116 @@ const DynamicLogo = ({ data, animate = true, size = 512, debug = false }) => {
     );
   };
 
-  // Debug lines for bottom arrow (only shown in debug mode)
-  // Line 1 (orange dashed): from arrow center to target point on circle - where it SHOULD point
-  // Line 2 (green solid): from arrow center - where arrow IS actually pointing after rotation
+  // Debug visualization for bottom arrow's WORLD-FIXED imaginary circle
+  // The circle is ALWAYS UPRIGHT - 0° is always at absolute top (world 12 o'clock)
   const renderBottomArrowDebugLines = () => {
     if (!debug) return null;
     
     const scale = 0.28;
     const offsetY = 10;
-    const targetAngle = Number(bottom_arrow_target) || 0;
+    const worldTargetAngle = Number(bottom_arrow_target) || 0;
     
-    // Arrow center position (same calculation as in renderBottomArrow)
-    const arrowCenterRadius = (1100 - 846) * scale + offsetY;
+    // Arrow center position in world coordinates
+    // The arrow POSITION moves with the A (below it)
+    const arrowCenterRadius = (1100 - 846) * scale + offsetY; // ≈ 81
     const arrowCenterAngle = pointerAngle + 180;
     const arrowCenter = polarToCart(arrowCenterAngle, arrowCenterRadius);
     
-    // Target point on circle
-    const target = polarToCart(targetAngle, R_BLUE);
+    // Imaginary circle radius (for visualization)
+    const imaginaryCircleRadius = 50;
     
-    // Calculate the direction arrow should point
-    const directionToTarget = calculateDirectionToTarget(arrowCenterAngle, arrowCenterRadius, targetAngle, R_BLUE);
+    // Helper: get point on the WORLD-FIXED imaginary circle
+    // The circle is always upright - 0° is always at the absolute top
+    // This does NOT rotate with the A
+    const getWorldCirclePoint = (worldAngle) => {
+      // World coordinates: 0° = top, 90° = right, 180° = bottom, 270° = left
+      return {
+        x: arrowCenter.x + imaginaryCircleRadius * Math.sin(worldAngle * Math.PI / 180),
+        y: arrowCenter.y - imaginaryCircleRadius * Math.cos(worldAngle * Math.PI / 180)
+      };
+    };
     
-    // The actual local rotation applied (same as in renderBottomArrow)
-    const ARROW_PATH_DEFAULT_ANGLE = 0;
-    const localRotation = directionToTarget - pointerAngle - ARROW_PATH_DEFAULT_ANGLE;
+    // Target point on the world-fixed imaginary circle
+    const targetPoint = getWorldCirclePoint(worldTargetAngle);
     
-    // Where the arrow is actually pointing after rotation = pointerAngle + localRotation + ARROW_PATH_DEFAULT_ANGLE
-    const actualArrowDirection = pointerAngle + localRotation + ARROW_PATH_DEFAULT_ANGLE;
+    // Cardinal points - ALWAYS at absolute positions (circle is always upright)
+    const point0 = getWorldCirclePoint(0);     // Absolute top (12 o'clock)
+    const point90 = getWorldCirclePoint(90);   // Absolute right (3 o'clock)
+    const point180 = getWorldCirclePoint(180); // Absolute bottom (6 o'clock)
+    const point270 = getWorldCirclePoint(270); // Absolute left (9 o'clock)
     
-    // Extend lines from arrow center to outer ring
-    const targetLineEnd = polarToCart(directionToTarget, R_OUTER);
-    const actualLineEnd = polarToCart(actualArrowDirection, R_OUTER);
+    // Calculate local rotation for display
+    const localRotation = worldTargetAngle - pointerAngle;
     
     return (
       <g>
-        {/* Line 1: Arrow center to target (orange dashed) - where it SHOULD point */}
-        <line
-          x1={arrowCenter.x}
-          y1={arrowCenter.y}
-          x2={target.x}
-          y2={target.y}
-          stroke="#E65100"
-          strokeWidth={3}
-          strokeDasharray="8 4"
-          strokeLinecap="round"
+        {/* The imaginary circle - ALWAYS UPRIGHT - cyan dashed */}
+        <circle
+          cx={arrowCenter.x}
+          cy={arrowCenter.y}
+          r={imaginaryCircleRadius}
+          fill="none"
+          stroke="#00BCD4"
+          strokeWidth={1.5}
+          strokeDasharray="4 3"
+          opacity={0.8}
         />
-        {/* Line 2: Arrow center in calculated direction (green) - where arrow IS pointing */}
+        
+        {/* Cardinal direction markers - FIXED at absolute positions */}
+        <circle cx={point0.x} cy={point0.y} r={4} fill="#00BCD4" opacity={0.8} />
+        <circle cx={point90.x} cy={point90.y} r={4} fill="#00BCD4" opacity={0.8} />
+        <circle cx={point180.x} cy={point180.y} r={4} fill="#00BCD4" opacity={0.8} />
+        <circle cx={point270.x} cy={point270.y} r={4} fill="#00BCD4" opacity={0.8} />
+        
+        {/* Labels for cardinal points - always at same world positions */}
+        <text x={point0.x} y={point0.y - 8} fill="#00BCD4" fontSize="8" textAnchor="middle" fontWeight="bold">0°</text>
+        <text x={point90.x + 10} y={point90.y + 3} fill="#00BCD4" fontSize="8" textAnchor="start">90°</text>
+        <text x={point180.x} y={point180.y + 12} fill="#00BCD4" fontSize="8" textAnchor="middle">180°</text>
+        <text x={point270.x - 10} y={point270.y + 3} fill="#00BCD4" fontSize="8" textAnchor="end">270°</text>
+        
+        {/* Line from arrow center to target point (orange) */}
         <line
           x1={arrowCenter.x}
           y1={arrowCenter.y}
-          x2={actualLineEnd.x}
-          y2={actualLineEnd.y}
-          stroke="#4CAF50"
+          x2={targetPoint.x}
+          y2={targetPoint.y}
+          stroke="#FF5722"
           strokeWidth={2}
           strokeLinecap="round"
         />
-        {/* Small circle at arrow center (orange) */}
-        <circle cx={arrowCenter.x} cy={arrowCenter.y} r={5} fill="#E65100" />
-        {/* Small circle at target on blue ring (blue) */}
-        <circle cx={target.x} cy={target.y} r={5} fill="#2196F3" />
+        
+        {/* Arrow center dot (green) */}
+        <circle cx={arrowCenter.x} cy={arrowCenter.y} r={5} fill="#4CAF50" />
+        
+        {/* Target point on imaginary circle (orange filled) */}
+        <circle cx={targetPoint.x} cy={targetPoint.y} r={6} fill="#FF5722" stroke="#FFF" strokeWidth={1.5} />
+        
+        {/* Debug info panel */}
+        <g>
+          <rect 
+            x={CENTER - 110} 
+            y={CENTER + 185} 
+            width={220} 
+            height={52} 
+            fill="white" 
+            stroke="#333" 
+            strokeWidth={1} 
+            rx={4}
+            opacity={0.95}
+          />
+          <text x={CENTER} y={CENTER + 198} fill="#00BCD4" fontSize="9" fontWeight="bold" textAnchor="middle">
+            World-Fixed Imaginary Circle (Always Upright)
+          </text>
+          <text x={CENTER} y={CENTER + 210} fill="#333" fontSize="8" textAnchor="middle">
+            A angle: {pointerAngle.toFixed(1)}° | World target: {worldTargetAngle}°
+          </text>
+          <text x={CENTER} y={CENTER + 222} fill="#333" fontSize="8" textAnchor="middle">
+            localRotation = {worldTargetAngle} - {pointerAngle.toFixed(1)} = {localRotation.toFixed(1)}°
+          </text>
+          <text x={CENTER} y={CENTER + 234} fill="#FF5722" fontSize="8" fontWeight="bold" textAnchor="middle">
+            Arrow always points to world {worldTargetAngle}° (absolute)
+          </text>
+        </g>
       </g>
     );
   };
